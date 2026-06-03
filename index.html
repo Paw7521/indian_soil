@@ -1,16 +1,370 @@
-<div class="soil-buttons">
-    <button onclick="showSoil('jalodh')">जलोढ़ मृदा</button>
-    <button onclick="showSoil('lal')">लाल एवं पीली मृदा</button>
-    <button onclick="showSoil('kali')">काली मृदा</button>
-    <button onclick="showSoil('laterite')">लेटराइट मृदा</button>
-    <button onclick="showSoil('parvatiya')">पर्वतीय मृदा</button>
-    <button onclick="showSoil('balui')">बलुई मृदा</button>
-    <button onclick="showSoil('lavniya')">लवणीय/क्षारीय मृदा</button>
-    <button onclick="showSoil('peat')">दलदली/पीट मृदा</button>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>भारत की प्रमुख मृदाएँ</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Nirmala UI",sans-serif;
+}
+
+body{
+background:#f4f6f8;
+}
+
+header{
+background:#0d6efd;
+color:white;
+text-align:center;
+padding:20px;
+font-size:32px;
+font-weight:bold;
+}
+
+.container{
+width:95%;
+max-width:1400px;
+margin:auto;
+padding:20px;
+}
+
+.soil-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:10px;
+margin-bottom:20px;
+}
+
+.soil-btn{
+border:none;
+padding:14px;
+font-size:18px;
+border-radius:8px;
+cursor:pointer;
+transition:.3s;
+font-weight:bold;
+}
+
+.soil-btn:hover{
+transform:scale(1.05);
+}
+
+.map-box{
+background:white;
+padding:15px;
+border-radius:12px;
+box-shadow:0 0 10px rgba(0,0,0,.15);
+}
+
+#soilMap{
+width:100%;
+max-height:800px;
+object-fit:contain;
+display:block;
+margin:auto;
+}
+
+.info-box{
+margin-top:20px;
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 0 10px rgba(0,0,0,.15);
+line-height:1.9;
+font-size:18px;
+}
+
+.back-btn{
+display:none;
+margin-top:15px;
+padding:12px 25px;
+font-size:18px;
+cursor:pointer;
+border:none;
+background:#198754;
+color:white;
+border-radius:8px;
+}
+
+h2{
+margin-bottom:10px;
+color:#0d6efd;
+}
+
+ul{
+padding-left:25px;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+भारत की प्रमुख मृदाएँ
+</header>
+
+<div class="container">
+
+<div class="soil-grid">
+
+<button class="soil-btn" onclick="showSoil('jalodh')" style="background:#b8e986">
+जलोढ़ मृदा
+</button>
+
+<button class="soil-btn" onclick="showSoil('lal')" style="background:#ff7b7b">
+लाल एवं पीली मृदा
+</button>
+
+<button class="soil-btn" onclick="showSoil('kali')" style="background:#777;color:white">
+काली मृदा
+</button>
+
+<button class="soil-btn" onclick="showSoil('laterite')" style="background:#f6aa54">
+लेटराइट मृदा
+</button>
+
+<button class="soil-btn" onclick="showSoil('parvatiya')" style="background:#d6b4f0">
+पर्वतीय मृदा
+</button>
+
+<button class="soil-btn" onclick="showSoil('balui')" style="background:#f5dc91">
+बलुई मृदा
+</button>
+
+<button class="soil-btn" onclick="showSoil('lavniya')" style="background:#7ec8ff">
+लवणीय / क्षारीय मृदा
+</button>
+
+<button class="soil-btn" onclick="showSoil('peat')" style="background:#55d6c2">
+दलदली / पीट मृदा
+</button>
+
 </div>
 
-<div id="mapArea">
-    <img id="soilMap" src="all-soils.png">
+<div class="map-box">
+
+<img id="soilMap"
+src="images/all-soils.png"
+alt="भारत की मृदा">
+
+<center>
+<button id="backBtn" class="back-btn" onclick="showAll()">
+सभी मृदाएँ दिखाएँ
+</button>
+</center>
+
 </div>
 
-<div id="soilInfo"></div>
+<div class="info-box" id="soilInfo">
+
+<h2>निर्देश</h2>
+
+किसी भी मृदा पर क्लिक करें।
+
+नक्शे में केवल वही मृदा दिखाई जाएगी तथा नीचे उसकी सम्पूर्ण जानकारी प्रदर्शित होगी।
+
+</div>
+
+</div>
+
+<script>
+
+const soils = {
+
+jalodh:{
+image:"images/jalodh.png",
+info:`
+<h2>जलोढ़ मृदा</h2>
+
+<p>
+भारत की सबसे उपजाऊ मृदा।
+नदियों द्वारा लाई गई अवसादी मृदा।
+</p>
+
+<ul>
+<li>उत्तर प्रदेश</li>
+<li>बिहार</li>
+<li>पंजाब</li>
+<li>हरियाणा</li>
+<li>पश्चिम बंगाल</li>
+<li>असम</li>
+</ul>
+
+<h3>मुख्य फसलें</h3>
+गेहूँ, धान, गन्ना, जूट।
+`
+},
+
+lal:{
+image:"images/lal-pili.png",
+info:`
+<h2>लाल एवं पीली मृदा</h2>
+
+<p>
+लौह ऑक्साइड की अधिकता के कारण लाल रंग।
+</p>
+
+<ul>
+<li>ओडिशा</li>
+<li>झारखंड</li>
+<li>छत्तीसगढ़</li>
+<li>तेलंगाना</li>
+<li>तमिलनाडु</li>
+</ul>
+
+<h3>मुख्य फसलें</h3>
+मूंगफली, बाजरा, दालें।
+`
+},
+
+kali:{
+image:"images/kali.png",
+info:`
+<h2>काली मृदा</h2>
+
+<p>
+रेगर मृदा के नाम से प्रसिद्ध।
+कपास उत्पादन के लिए सर्वश्रेष्ठ।
+</p>
+
+<ul>
+<li>महाराष्ट्र</li>
+<li>मध्य प्रदेश</li>
+<li>गुजरात</li>
+<li>तेलंगाना</li>
+</ul>
+`
+},
+
+laterite:{
+image:"images/laterite.png",
+info:`
+<h2>लेटराइट मृदा</h2>
+
+<p>
+अधिक वर्षा वाले क्षेत्रों में पाई जाती है।
+</p>
+
+<ul>
+<li>केरल</li>
+<li>कर्नाटक</li>
+<li>तमिलनाडु</li>
+<li>ओडिशा</li>
+</ul>
+`
+},
+
+parvatiya:{
+image:"images/parvatiya.png",
+info:`
+<h2>पर्वतीय मृदा</h2>
+
+<p>
+हिमालयी क्षेत्रों की प्रमुख मृदा।
+</p>
+
+<ul>
+<li>जम्मू-कश्मीर</li>
+<li>हिमाचल प्रदेश</li>
+<li>उत्तराखंड</li>
+<li>अरुणाचल प्रदेश</li>
+</ul>
+`
+},
+
+balui:{
+image:"images/balui.png",
+info:`
+<h2>बलुई मृदा</h2>
+
+<p>
+जल धारण क्षमता कम।
+</p>
+
+<ul>
+<li>पश्चिमी राजस्थान</li>
+<li>कच्छ क्षेत्र</li>
+</ul>
+`
+},
+
+lavniya:{
+image:"images/lavniya.png",
+info:`
+<h2>लवणीय / क्षारीय मृदा</h2>
+
+<p>
+लवणों की मात्रा अधिक होती है।
+</p>
+
+<ul>
+<li>राजस्थान</li>
+<li>गुजरात</li>
+<li>हरियाणा</li>
+</ul>
+`
+},
+
+peat:{
+image:"images/peat.png",
+info:`
+<h2>दलदली / पीट मृदा</h2>
+
+<p>
+कार्बनिक पदार्थों से भरपूर।
+</p>
+
+<ul>
+<li>सुंदरवन</li>
+<li>केरल</li>
+<li>असम</li>
+</ul>
+`
+}
+
+};
+
+function showSoil(type){
+
+document.getElementById("soilMap").src =
+soils[type].image;
+
+document.getElementById("soilInfo").innerHTML =
+soils[type].info;
+
+document.getElementById("backBtn").style.display =
+"inline-block";
+
+window.scrollTo({
+top:300,
+behavior:"smooth"
+});
+
+}
+
+function showAll(){
+
+document.getElementById("soilMap").src =
+"images/all-soils.png";
+
+document.getElementById("soilInfo").innerHTML = `
+<h2>भारत की प्रमुख मृदाएँ</h2>
+किसी मृदा पर क्लिक करके उसकी विस्तृत जानकारी देखें।
+`;
+
+document.getElementById("backBtn").style.display =
+"none";
+
+}
+
+</script>
+
+</body>
+</html>
