@@ -1,0 +1,16 @@
+<div class="soil-buttons">
+    <button onclick="showSoil('jalodh')">जलोढ़ मृदा</button>
+    <button onclick="showSoil('lal')">लाल एवं पीली मृदा</button>
+    <button onclick="showSoil('kali')">काली मृदा</button>
+    <button onclick="showSoil('laterite')">लेटराइट मृदा</button>
+    <button onclick="showSoil('parvatiya')">पर्वतीय मृदा</button>
+    <button onclick="showSoil('balui')">बलुई मृदा</button>
+    <button onclick="showSoil('lavniya')">लवणीय/क्षारीय मृदा</button>
+    <button onclick="showSoil('peat')">दलदली/पीट मृदा</button>
+</div>
+
+<div id="mapArea">
+    <img id="soilMap" src="all-soils.png">
+</div>
+
+<div id="soilInfo"></div>
